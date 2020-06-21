@@ -1,7 +1,7 @@
 # ckhp_cdt_tools
-Tools to help with using Check Point CLI CDT based tools MDM environment
+This tool is designed to make using the [Check Point Central Deployment Tool (CDT)](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk111158) CLI version easier by generating consistent syntax.
 
-Environments may employ multiple 'Multi Domain Management (MDM)' servers, and this tool supports a single server, or many.
+MDM based environments may employ multiple 'Multi Domain Management (MDM)' servers. This tool supports a single MDM server, or multiple.
 
 The CDT CLI tool needs to be run from the MDM server where the domain is ACTIVE.
 Some environments may have ACTIVE domains on different MDM servers. The tool is design to link those together to make sure the CLI output is correct.
