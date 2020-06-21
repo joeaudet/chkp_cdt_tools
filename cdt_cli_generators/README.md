@@ -1,12 +1,26 @@
 # ckhp_cdt_tools
 This tool is designed to make using the [Check Point Central Deployment Tool (CDT)](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk111158) CLI version easier by generating consistent syntax.
 
+### Tool overview
 MDM based environments may employ multiple 'Multi Domain Management (MDM)' servers. This tool supports a single MDM server, or multiple.
 
 The CDT CLI tool needs to be run from the MDM server where the domain is ACTIVE.
 Some environments may have ACTIVE domains on different MDM servers. The tool is design to link those together to make sure the CLI output is correct.
 
 mdmservername <-> activemdmserver | These values need to be the same so that when you select the MDM server where the domain is active, it will only show you those domains.
+
+-Default File locations used within the tool:
+	-/opt/CPcdt/ - CDT main path
+	-/opt/CPcdt/candidate_lists/ - Candidate List CSV Files
+	-/opt/CPcdt/deployment_plans/ - Deployment Plan XML Files
+	-/opt/CPcdt/filter_lists/ - Filter Files
+
+Commands to make the folders using the default values, run from expert mode on the MDM server:
+```
+mkdir /opt/CPcdt/candidate_lists
+mkdir /opt/CPcdt/deployment_plans
+mkdir /opt/CPcdt/filter_lists
+```
 
 ### Download & Use (Tested in Chrome and Firefox)
 1. This file can be operated locally on a workstation or hosted off a server. Only HTML, javascript, and jQuery 2.2 minified are used within the file. No local system access is needed.
