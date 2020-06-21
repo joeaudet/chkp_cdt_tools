@@ -52,7 +52,7 @@ var activemdmserver = "", filterEnabled = false;
 $( document ).ready(function() {
 
 	// Hide the following elements on load
-	$("#crIdInputDiv, #domainNameSelectDiv, #filterListInputDiv, #create_commandsDiv, #copyCliOutputDiv, #deploymentPlansObjSelectDiv, #mgmtServerInputDiv, #copyFilterOutputDiv" ).hide();
+	$("#activityIdInputDiv, #domainNameSelectDiv, #filterListInputDiv, #create_commandsDiv, #copyCliOutputDiv, #deploymentPlansObjSelectDiv, #mgmtServerInputDiv, #copyFilterOutputDiv" ).hide();
 
 	document.getElementById('filterListInput').value = "";
 
@@ -104,14 +104,14 @@ $( document ).ready(function() {
 	$('#mdsServerSelect').change(function(){
 
 		// Process the following events anytime this select option is changed
-		$("#crIdInputDiv, #domainNameSelectDiv, #filterListInputDiv, #create_commandsDiv, #copyCliOutputDiv, #deploymentPlansObjSelectDiv, #mgmtServerInputDiv, #copyFilterOutputDiv" ).hide();
+		$("#activityIdInputDiv, #domainNameSelectDiv, #filterListInputDiv, #create_commandsDiv, #copyCliOutputDiv, #deploymentPlansObjSelectDiv, #mgmtServerInputDiv, #copyFilterOutputDiv" ).hide();
 		defaultOutputDivs();
-		document.getElementById('crIdInput').value = "";
+		document.getElementById('activityIdInput').value = "";
 
 
 		// Conditionally process the following events based upon #rewriteOptionSelect selected option value
 		if ( $("#mdsServerSelect option:selected").val() === "") {
-			$("#domainNameSelectDiv, #crIdInputDiv, #deploymentPlansObjSelectDiv, #mgmtServerInputDiv").hide();
+			$("#domainNameSelectDiv, #activityIdInputDiv, #deploymentPlansObjSelectDiv, #mgmtServerInputDiv").hide();
 		} else {
 			$("#domainNameSelectDiv").show();
 
@@ -133,7 +133,7 @@ $( document ).ready(function() {
 	$(document).on('change', '#domainNameSelect', function(){
 
 		// Process the following events anytime this select option is changed
-		$("#deploymentPlansObjSelectDiv, #crIdInputDiv, #filterListInputDiv, #create_commandsDiv, #copyCliOutputDiv" ).hide();
+		$("#deploymentPlansObjSelectDiv, #activityIdInputDiv, #filterListInputDiv, #create_commandsDiv, #copyCliOutputDiv" ).hide();
 		defaultOutputDivs();
 
 		// Conditionally process the following events based upon #rewriteOptionSelect selected option value
@@ -158,15 +158,15 @@ $( document ).ready(function() {
 	$(document).on('change', '#deploymentPlansObjelect', function(){
 
 		// Process the following events anytime this select option is changed
-		$("#crIdInputDiv, #filterListInputDiv, #create_commandsDiv, #copyCliOutputDiv" ).hide();
+		$("#activityIdInputDiv, #filterListInputDiv, #create_commandsDiv, #copyCliOutputDiv" ).hide();
 		defaultOutputDivs();
 
 
 		// Conditionally process the following events based upon #rewriteOptionSelect selected option value
 		if ( $("#deploymentPlansObjelect option:selected").val() === "") {
-			$("#crIdInputDiv, #create_commandsDiv, #mgmtServerInputDiv").hide();
+			$("#activityIdInputDiv, #create_commandsDiv, #mgmtServerInputDiv").hide();
 		} else {
-			$("#crIdInputDiv, #create_commandsDiv, #mgmtServerInputDiv").show();
+			$("#activityIdInputDiv, #create_commandsDiv, #mgmtServerInputDiv").show();
 
 		if ($("#filterEnabled").is(":checked")){
 			$('#filterListInputDiv').show();
@@ -180,9 +180,9 @@ $( document ).ready(function() {
 	$("#create_commands").click(function () {
 
 		//Make sure that there is a change request ID specified. If not, stop
-		if ( $("#crIdInput").val() == '' ) {
-			$( "#cliOutputDiv" ).html("<h2 style='color: #E65784'>You need to specify a Change request ID</h2>");
-			document.getElementById("crIdInput").focus();
+		if ( $("#activityIdInput").val() === "" ) {
+			$( "#cliOutputDiv" ).html("<h2 style='color: #E65784'>You need to specify a Activity Name / Change Request ID</h2>");
+			document.getElementById("activityIdInput").focus();
 			return;
 		}
 
@@ -191,14 +191,18 @@ $( document ).ready(function() {
 		var deploymentPlanSelection = $.trim(deploymentPlansObj[$("#deploymentPlansObjelect").val()].filename) + ".xml";
 		var domainIP = $.trim(domainsObj[$("#domainNameSelect").val()].ipaddress);
 		var domainServerArg = " -server=" + domainIP;
-		var candidateListsArg = "-candidates=" + candidateListsPath + $.trim($("#crIdInput").val()) + "_candidates.csv" ;
+		var candidateListsArg = "-candidates=" + candidateListsPath + $.trim($("#activityIdInput").val()) + "_candidates.csv" ;
 		var filterListInput = $.trim($("#filterListInput").val());
-		var filterFileName = $.trim($("#crIdInput").val()) + "_filter.txt";
+		var filterFileName = $.trim($("#activityIdInput").val()) + "_filter.txt";
 		var filterListArg = " -filter=" + filterListPath + filterFileName;
 
 		//Create beginning of CLI output with required elements
-		//$( "#cliOutputDiv" ).text( "iRule Name: " + "trav-" + appname + "-rewrite_rule" + "\n\r" + iruleMethod );
-		$( "#cliOutputDiv" ).text( "SSH into the management server IP: " + mdmServerIP + "\nFrom expert mode on the management server run the following commands:\n\nunset TMOUT\n" );
+		$( "#cliOutputDiv" ).text( "#######################\n" );
+		$( "#cliOutputDiv" ).append( "Generate Candidate List\n" );
+		$( "#cliOutputDiv" ).append( "#######################\n\n" );
+		$( "#cliOutputDiv" ).append( "SSH into the management server IP: " + mdmServerIP + "\nFrom expert mode on the management server run the following commands:\n\n" );
+
+		$( "#cliOutputDiv" ).append( "unset TMOUT\n" );
 
 		//Add mdsenv command to output
 		$( "#cliOutputDiv" ).append( "mdsenv " + domainIP + "\n" );
@@ -216,28 +220,40 @@ $( document ).ready(function() {
 		$( "#cliOutputDiv" ).append( "\n\n" );
 
 		//Add deployment plan execution generation command to output
+		$( "#cliOutputDiv" ).append( "#######################\n" );
+		$( "#cliOutputDiv" ).append( "Execute Deployment Plan\n" );
+		$( "#cliOutputDiv" ).append( "#######################\n\n" );
+		$( "#cliOutputDiv" ).append( "SSH into the management server IP: " + mdmServerIP + "\nFrom expert mode on the management server run the following commands:\n\n" );
+		$( "#cliOutputDiv" ).append( "unset TMOUT\n" );
+		$( "#cliOutputDiv" ).append( "mdsenv " + domainIP + "\n" );
 		$( "#cliOutputDiv" ).append( cdtBinaryArg + " -execute " + candidateListsArg + deploymentPlanArg + deploymentPlanSelection);
 		if (filterEnabled) {
 			$( "#cliOutputDiv" ).append( filterListArg );
 		}
 		//Append domain server IP to the end of the command - necessary in an MDS environment
 		$( "#cliOutputDiv" ).append( domainServerArg );
-		$( "#cliOutputDiv" ).append( "\n\n" );
+		$( "#cliOutputDiv" ).append( "\n" );
 
 		//End #output-div .text insertion
 
     //Put filter list entries into the output box, or place a message that list was empty
 		if (filterEnabled) {
-			if ( $("#filterListInput").val() == '' ) {
+			if ( $("#filterListInput").val() === "" ) {
 				$( "#filterFileOutputDiv" ).html("<h2 style='color: #E65784'>You selected to use a filter list but didn't specify any gateway names</h2>");
 				document.getElementById("filterListInput").focus();
 				$("#cliOutputDiv, #copyCliOutputDiv, #copyFilterOutputDiv" ).hide();
 				return;
 			} else {
-				var filterListLines = $('textarea[name=filterListInput]').val().split('\n');
+				//Split the lines in a textbox, trim whitepaces from either side of the text
+				var filterListLines = $.map($('textarea[name=filterListInput]').val().split('\n'), $.trim);
 				$( "#filterFileOutputDiv" ).text( "echo -e \'" );
 				$.each(filterListLines, function(){
-					$( "#filterFileOutputDiv" ).append( this + "\\n");
+					//This will account for any blank lines and ignore them
+					if (this.length > 0){
+						$( "#filterFileOutputDiv" ).append(this + "\\n");
+					} else {
+
+					}
 				});
 				$( "#filterFileOutputDiv" ).append( "\' >> " + filterListPath + filterFileName );
 				$('#copyCliOutputDiv, #cliOutputDiv, #copyFilterOutputDiv').show();
@@ -266,7 +282,7 @@ $( document ).ready(function() {
 
 	function defaultOutputDivs() {
 		$( "#cliOutputDiv" ).html("<h2>CDT Commands will appear here</h2>");
-		$( "#filterFileOutputDiv" ).html("<h2>If selected, filter List commands will appear here</h2>");
+		$( "#filterFileOutputDiv" ).html("<h2>If selected, filter list creation commands will appear here</h2>");
 	}//end defaultOutputDivs
 
 	// Show/hide RATIO input section
@@ -288,6 +304,16 @@ $( document ).ready(function() {
 		+ candidateListsPath + ' - Candidate List CSV Files\n'
 		+ deploymentPlanPath + ' - Deployment Plan XML Files\n'
 		+ filterListPath + ' - Filter Files');
+	});
+
+	$("#activityIdHelp").click(function () {
+		alert('This activity ID value will be used to name the output files used in the CLI commands generated.\n\n'
+		+ 'Example: \n'
+		+ 'Activity Name: CR123 - this will produce commands to generate these two files:\n'
+		+ 'Candidate output file: CR123_candidates.csv\n'
+		+ 'Filter List file: CR123_filter_list.txt\n\n'
+		+ 'A common example is using the change request ID for easy tracking\n'
+		+ 'and file removal after the change activity is completed.');
 	});
 
 }); //end document ready script elements
@@ -315,9 +341,6 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 
 <style>
 
-	* {
-	  box-sizing: border-box;
-	}
 	.output {
 		margin-top: 15px;
 		font-size: 14px;
@@ -352,10 +375,20 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 	select{
 		border-style: inset;
 		outline-color: #E65784 !important;
+		margin: 2px;
 	}
 
 	select:focus{
 		border-color: #E65784 !important;
+	}
+
+	#activityIdInputDiv{
+		margin-top: 5px;
+	}
+
+	input:focus {
+	  background-color: #E65784;
+		color: white;
 	}
 
 </style>
@@ -369,18 +402,21 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 		<br>
 		<a href="https://sc1.checkpoint.com/documents/CDT/v1.8/Default.htm" title="CDT v1.8 Admin Guide" target="_blank">CDT v1.8 Admin Guide</a>
 		<br>
-		<a href="#" id="file_locations_button">Show File Locations</a>
+		<a href="#" id="file_locations_button">Show Defined File Locations</a>
 		<br><br>
 		<a href="https://github.com/joeaudet/chkp_cdt_tools/tree/master/cdt_cli_generators" title="Click here for instructions on using this tool" target="_blank">Instruction Manual</a>
+		<br /><br />
+		This tool tested on CDT versions:<br />
+		1.7, 1.8
 	</div>
 	<h2>CDT CLI generator - MDM Version</h2>
 	<div id="mdmSelectDiv"></div>
 	<div id="domainNameSelectDiv"></div>
 	<div id="deploymentPlansObjSelectDiv"></div>
-	<div id="crIdInputDiv">
-		<label for="crIdInput">Change Request ID:</label><input type="text" id="crIdInput" class="input-box">
-		<br />
-		<input type="checkbox" id="filterEnabled" value="no"> Use filter list
+	<div id="activityIdInputDiv">
+		<label for="activityIdInput">Activity Name</label><input type="text" id="activityIdInput" class="input-box"> - <a href="#" id="activityIdHelp" title="Click for more info about the activity name usage">What is this?</a>
+		<br /><br />
+		<input type="checkbox" id="filterEnabled" value="no"> Use candidate filter list
 		<br />
 	</div>
 	<div id="filterListInputDiv">
