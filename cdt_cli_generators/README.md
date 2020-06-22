@@ -1,17 +1,11 @@
-# ckhp_cdt_tools
+## cdt_cli_generator_mdm - Overview
 This tool is designed to make using the [Check Point Central Deployment Tool (CDT)](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk111158) CLI version easier by generating properly formatted CLI syntax for candidate list generation, and execution of the same deployment plan. Basic knowledge of CDT is necessary to get the most use of this tool.
 
 <a href="http://www.pinktech.pro/cdt_tool_demo/cdt_cli_generator_mdm.html" target="_blank">Demo Site</a>
 
-### Tool overview
-MDM based environments may employ multiple 'Multi Domain Management (MDM)' servers. This tool supports a single MDM server, or multiple.
+See below for download, usage and customization ***(required)*** information.
 
-The CDT CLI tool needs to be run from the MDM server where the domain is ACTIVE.
-Some environments may have ACTIVE domains on different MDM servers. The tool is design to link those together to make sure the CLI output is correct.
-
-mdmservername <-> activemdmserver | These values need to be the same so that when you select the MDM server where the domain is active, it will only show you those domains.
-
-Commands to make the folders using the default values, run from expert mode on the MDM server:
+To make the folders using the default values, run from expert mode on the MDM server (before running any of the output commands):
 ```
 mkdir /opt/CPcdt/candidate_lists
 mkdir /opt/CPcdt/deployment_plans
@@ -26,7 +20,13 @@ mkdir /opt/CPcdt/filter_lists
 	```
 1. Open the HTML file in a browser, select an MDM server, a domain, a deployment plan, enter a activity name (used in output file usage), then click the button to Create Commands
 
-### Tool customization
+### Tool customization (required)
+MDM based environments may employ multiple 'Multi Domain Management (MDM)' servers. This tool supports a single MDM server, or multiple.
+
+Some environments may have ACTIVE domains on different MDM servers. ***The CDT CLI commands need to be run from the MDM server where the domain is ACTIVE.***
+
+mdmservername <-> activemdmserver | These values need to be the same so that when you select the MDM server where the domain is active, it will only filter to show you those domains.
+
 - Edit the HTML file in an editor to change the data objects for use in your environment (these are comma separated):
 	- mdmServerObj (this is an object where you define your MDM servers)
 		- desc: What you want to see displayed in the dropdown menu
@@ -66,3 +66,9 @@ mkdir /opt/CPcdt/filter_lists
 	- /opt/CPcdt/candidate_lists/ - Candidate List CSV Files
 	- /opt/CPcdt/deployment_plans/ - Deployment Plan XML Files
 	- /opt/CPcdt/filter_lists/ - Filter Files
+
+### FAQ
+- Q: Why dropdown menu's instead of input boxes?
+	- A: Customer management environments don't change very often. By storing the data in JSON objects this info will be readily available everytime the page is opened without having to look it up.
+- Q: Should I store a copy of the objects after I populate them?
+	- A: Yes. If you download a new copy of the file it will overwrite previously stored information. You would replace the default objects with your customized ones.
