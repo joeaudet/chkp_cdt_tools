@@ -18,8 +18,8 @@
 
 //Objects to contain the various data components to drive the application
 var mdmServerObj = [
-	{ desc: "MDM1", mdmservername: "mdm1", ipaddress: "1.1.1.1" },
-	{ desc: "MDM2", mdmservername: "mdm2", ipaddress: "2.2.2.2" }
+	{ desc: "MDM1", mdmservername: "mdm1", mdmip: "1.1.1.1" },
+	{ desc: "MDM2", mdmservername: "mdm2", mdmip: "2.2.2.2" }
 ];
 
 var deploymentPlansObj = [
@@ -31,8 +31,8 @@ var deploymentPlansObj = [
 ];
 
 var domainsObj = [
-	{ desc: "Domain1", activemdmserver: "mdm1", ipaddress: "1.1.1.50"},
-	{ desc: "Domain2", activemdmserver: "mdm2", ipaddress: "2.2.2.50"}
+	{ desc: "Domain1", activemdmservername: "mdm1", activedomainserverip: "1.1.1.50"},
+	{ desc: "Domain2", activemdmservername: "mdm2", activedomainserverip: "2.2.2.50"}
 ];
 
 //Variables to store repetitively used information
@@ -80,7 +80,7 @@ $( document ).ready(function() {
 					option.text = object_name[key].desc;
 					selectList.appendChild(option);
 				} else {
-					if (object_name[key].activemdmserver === mdmServerObj[$("#mdsServerSelect").val()].mdmservername){
+					if (object_name[key].activemdmservername === mdmServerObj[$("#mdsServerSelect").val()].mdmservername){
 						var option = document.createElement("option");
 						option.setAttribute("value", key);
 						option.text = object_name[key].desc;
@@ -187,9 +187,9 @@ $( document ).ready(function() {
 		}
 
 		//Even though most info is coming from select elements, trimming in case someone adds a stray space in the objects
-	  var mdmServerIP = $.trim(mdmServerObj[$("#mdsServerSelect").val()].ipaddress);
+	  var mdmServerIP = $.trim(mdmServerObj[$("#mdsServerSelect").val()].mdmip);
 		var deploymentPlanSelection = $.trim(deploymentPlansObj[$("#deploymentPlansObjelect").val()].filename) + ".xml";
-		var domainIP = $.trim(domainsObj[$("#domainNameSelect").val()].ipaddress);
+		var domainIP = $.trim(domainsObj[$("#domainNameSelect").val()].activedomainserverip);
 		var domainServerArg = " -server=" + domainIP;
 		var candidateListsArg = "-candidates=" + candidateListsPath + $.trim($("#activityIdInput").val()) + "_candidates.csv" ;
 		var filterListInput = $.trim($("#filterListInput").val());

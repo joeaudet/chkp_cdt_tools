@@ -1,7 +1,7 @@
 ## cdt_cli_generator_mdm - Overview
 This tool is designed to make using the [Check Point Central Deployment Tool (CDT)](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk111158) CLI version easier by generating properly formatted CLI syntax for candidate list generation, and execution of the same deployment plan. Basic knowledge of CDT is necessary to get the most use of this tool.
 
-<a href="http://www.pinktech.pro/cdt_tool_demo/cdt_cli_generator_mdm.html" target="_blank">Demo Site</a>
+[Demo Site](http://www.pinktech.pro/cdt_tool_demo/cdt_cli_generator_mdm.html)
 
 See below for download, usage and customization ***(required)*** information.
 
@@ -14,7 +14,7 @@ mkdir /opt/CPcdt/filter_lists
 
 ### Download & Usage
 1. This file can be operated locally on a workstation or hosted off a server. Only HTML, javascript, and jQuery 2.2 minified are used within the file. No local system access is needed.
-1. Download the HTML file <a href="https://raw.githubusercontent.com/joeaudet/chkp_cdt_tools/master/cdt_cli_generators/cdt_cli_generator_mdm.html" target="_blank">cdt_cli_generator_mdm.html</a> from a command prompt to workstation or server:
+1. Download the HTML file [cdt_cli_generator_mdm.html](https://raw.githubusercontent.com/joeaudet/chkp_cdt_tools/master/cdt_cli_generators/cdt_cli_generator_mdm.html) from a command prompt to workstation or server:
 	```
 	curl -O https://raw.githubusercontent.com/joeaudet/chkp_cdt_tools/master/cdt_cli_generators/cdt_cli_generator_mdm.html
 	```
@@ -25,7 +25,7 @@ MDM based environments may employ multiple 'Multi Domain Management (MDM)' serve
 
 Some environments may have ACTIVE domains on different MDM servers. ***The CDT CLI commands need to be run from the MDM server where the domain is ACTIVE.***
 
-mdmservername <-> activemdmserver | These values need to be the same so that when you select the MDM server where the domain is active, it will only filter to show you those domains.
+mdmservername <-> activemdmservername | These values need to be the same so that when you select the MDM server, it will only filter to show you those domains that are active on it.
 
 - Edit the HTML file in an editor to change the data objects for use in your environment (these are comma separated):
 	- mdmServerObj (this is an object where you define your MDM servers)
@@ -35,8 +35,8 @@ mdmservername <-> activemdmserver | These values need to be the same so that whe
 		- Example object:
 		```
 		var mdmServerObj = [
-			{ desc: "MDM1", mdmservername: "mdm1", ipaddress: "1.1.1.1" },
-			{ desc: "MDM2", mdmservername: "mdm2", ipaddress: "2.2.2.2" }
+			{ desc: "MDM1", mdmservername: "mdm1", mdmip: "1.1.1.1" },
+			{ desc: "MDM2", mdmservername: "mdm2", mdmip: "2.2.2.2" }
 		];
 		```
 	- domainsObj
@@ -46,8 +46,8 @@ mdmservername <-> activemdmserver | These values need to be the same so that whe
 		- Example object:
 		```
 		var domainsObj = [
-			{ desc: "Domain1", activemdmserver: "mdm1", ipaddress: "1.1.1.50"},
-			{ desc: "Domain2", activemdmserver: "mdm2", ipaddress: "2.2.2.50"}
+			{ desc: "Domain1", activemdmservername: "mdm1", activedomainserverip: "1.1.1.50"},
+			{ desc: "Domain2", activemdmservername: "mdm2", activedomainserverip: "2.2.2.50"}
 		];
 		```
 	- deploymentPlansObj
