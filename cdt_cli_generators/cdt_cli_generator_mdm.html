@@ -339,8 +339,8 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 <style>
 
 	.output {
-		margin-top: 15px;
-		font-size: 14px;
+		margin-top: 10px;
+		font-size: 12px;
 	}
 
 	.input-box {
@@ -351,8 +351,9 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 	#utilityMenu{
 		position: fixed;
 		top: 10px;
-		right:50px;
+		right:25px;
 		margin: 0;
+		text-align: right;
 	}
 
 	a{
@@ -401,10 +402,16 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 		<br>
 		<a href="#" id="file_locations_button">Show Defined File Locations</a>
 		<br><br>
-		<a href="https://github.com/joeaudet/chkp_cdt_tools/tree/master/cdt_cli_generators" title="Click here for instructions on using this tool" target="_blank">Instruction Manual</a>
+		<a href="https://github.com/joeaudet/chkp_cdt_tools/tree/master/cdt_cli_generators" title="Click here for instructions on using this tool" target="_blank">About this tool</a>
 		<br /><br />
 		This tool tested on CDT versions:<br />
 		1.7, 1.8
+		<br /><br />
+		<span class="pinktext">Order of operation:</span><br />
+		Create Deployment Plan<br />
+		Create Candidate Filter (optional)<br />
+		Generate Candidate List<br />
+		Execute Deployment Plan<br />
 	</div>
 	<h2>CDT CLI generator - MDM Version</h2>
 	<div id="mdmSelectDiv"></div>
@@ -428,6 +435,7 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 		<br /><br />
 	</div>
 	<div id="copyFilterOutputDiv">
+		<hr>
 		<button type="button" onclick="copyToClipboard('#filterFileOutputDiv', 'appendtofile')" class="utilityButtonClass" id="copy_filter_file_output">Copy Filter File Output</button>
 	</div>
 	<pre id="filterFileOutputDiv" class="output">
