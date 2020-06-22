@@ -197,9 +197,7 @@ $( document ).ready(function() {
 		var filterListArg = " -filter=" + filterListPath + filterFileName;
 
 		//Create beginning of CLI output with required elements
-		$( "#cliOutputDiv" ).text( "#######################\n" );
-		$( "#cliOutputDiv" ).append( "Generate Candidate List\n" );
-		$( "#cliOutputDiv" ).append( "#######################\n\n" );
+		$( "#cliOutputDiv" ).text( "##### Generate Deployment Plan #####\n\n" );
 		$( "#cliOutputDiv" ).append( "SSH into the management server IP: " + mdmServerIP + "\nFrom expert mode on the management server run the following commands:\n\n" );
 
 		$( "#cliOutputDiv" ).append( "unset TMOUT\n" );
@@ -220,9 +218,7 @@ $( document ).ready(function() {
 		$( "#cliOutputDiv" ).append( "\n\n" );
 
 		//Add deployment plan execution generation command to output
-		$( "#cliOutputDiv" ).append( "#######################\n" );
-		$( "#cliOutputDiv" ).append( "Execute Deployment Plan\n" );
-		$( "#cliOutputDiv" ).append( "#######################\n\n" );
+		$( "#cliOutputDiv" ).append( "##### Execute Deployment Plan #####\n\n" );
 		$( "#cliOutputDiv" ).append( "SSH into the management server IP: " + mdmServerIP + "\nFrom expert mode on the management server run the following commands:\n\n" );
 		$( "#cliOutputDiv" ).append( "unset TMOUT\n" );
 		$( "#cliOutputDiv" ).append( "mdsenv " + domainIP + "\n" );
@@ -246,7 +242,8 @@ $( document ).ready(function() {
 			} else {
 				//Split the lines in a textbox, trim whitepaces from either side of the text
 				var filterListLines = $.map($('textarea[name=filterListInput]').val().split('\n'), $.trim);
-				$( "#filterFileOutputDiv" ).text( "echo -e \'" );
+				$( "#filterFileOutputDiv" ).text( "##### Create Filter File #####\n\n" );
+				$( "#filterFileOutputDiv" ).append( "echo -e \'" );
 				$.each(filterListLines, function(){
 					//This will account for any blank lines and ignore them
 					if (this.length > 0){
@@ -363,7 +360,7 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 		text-decoration: none;
 
 	}
-	a:hover{
+	a:hover, .pinktext{
 		color: #E65784;
 	}
 
@@ -414,13 +411,14 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 	<div id="domainNameSelectDiv"></div>
 	<div id="deploymentPlansObjSelectDiv"></div>
 	<div id="activityIdInputDiv">
-		<label for="activityIdInput">Activity Name</label><input type="text" id="activityIdInput" class="input-box"> - <a href="#" id="activityIdHelp" title="Click for more info about the activity name usage">What is this?</a>
+		<label for="activityIdInput">Activity Name: </label><input type="text" id="activityIdInput" class="input-box"> - <a href="#" id="activityIdHelp" title="Click for more info about the activity name usage">What is this?</a>
 		<br /><br />
 		<input type="checkbox" id="filterEnabled" value="no"> Use candidate filter list
 		<br />
 	</div>
 	<div id="filterListInputDiv">
-		<label for="filterListInput">Filter List Names:</label>
+		<label for="filterListInput">Names of gateways you want to include in candidate list (<span class="pinktext">each on a seperate line, no commas</span>):</label>
+		<br/>
 		<textarea id="filterListInput" rows="5" cols="30" name="filterListInput"></textarea>
 			<br>
 	</div>
@@ -429,21 +427,19 @@ function copyToClipboard(element, copyToClipboardOutputModifier) {
 		<button type="button" class="utilityButtonClass" id="create_commands">Create Commands</button>
 		<br /><br />
 	</div>
-
+	<div id="copyFilterOutputDiv">
+		<button type="button" onclick="copyToClipboard('#filterFileOutputDiv', 'appendtofile')" class="utilityButtonClass" id="copy_filter_file_output">Copy Filter File Output</button>
+	</div>
+	<pre id="filterFileOutputDiv" class="output">
+	</pre>
 	<div id="copyCliOutputDiv">
+		<hr>
 		<button type="button" onclick="copyToClipboard('#cliOutputDiv', 'newlines')" class="utilityButtonClass" id="copy_cli_output">Copy CDT CLI Output</button>
 		<br /><br />
 	</div>
 	<pre id="cliOutputDiv" class="output">
 	</pre>
 	<br /><br />
-
-	<div id="copyFilterOutputDiv">
-		<button type="button" onclick="copyToClipboard('#filterFileOutputDiv', 'appendtofile')" class="utilityButtonClass" id="copy_filter_file_output">Copy Filter File Output</button>
-		<hr>
-	</div>
-	<pre id="filterFileOutputDiv" class="output">
-	</pre>
 
 </body>
 
