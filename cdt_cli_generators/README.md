@@ -15,6 +15,7 @@ mkdir /opt/CPcdt/filter_lists
 ### Download & Usage
 1. This file can be operated locally on a workstation or hosted off a server. Only HTML, javascript, and jQuery 2.2 minified are used within the file. No local system access is needed.
 1. Download the HTML file [cdt_cli_generator_mdm.html](https://raw.githubusercontent.com/joeaudet/chkp_cdt_tools/master/cdt_cli_generators/cdt_cli_generator_mdm.html) from a command prompt to workstation or server:
+	***This will overwrite the file - make sure you back up your data objects first***
 	```
 	curl -O https://raw.githubusercontent.com/joeaudet/chkp_cdt_tools/master/cdt_cli_generators/cdt_cli_generator_mdm.html
 	```
