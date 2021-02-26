@@ -222,7 +222,7 @@ $( document ).ready(function() {
 		$( "#cliOutputDiv" ).append( "SSH into the management server IP: " + mdmServerIP + "\nFrom expert mode on the management server run the following commands:\n\n" );
 		$( "#cliOutputDiv" ).append( "unset TMOUT\n" );
 		$( "#cliOutputDiv" ).append( "mdsenv " + domainIP + "\n" );
-		$( "#cliOutputDiv" ).append( cdtBinaryArg + " -execute " + candidateListsArg + deploymentPlanArg + deploymentPlanSelection);
+		$( "#cliOutputDiv" ).append( "nohup " + cdtBinaryArg + " -execute " + candidateListsArg + deploymentPlanArg + deploymentPlanSelection);
 		if (filterEnabled) {
 			$( "#cliOutputDiv" ).append( filterListArg );
 		}
