@@ -243,6 +243,7 @@ $( document ).ready(function() {
 				//Split the lines in a textbox, trim whitepaces from either side of the text
 				var filterListLines = $.map($('textarea[name=filterListInput]').val().split('\n'), $.trim);
 				$( "#filterFileOutputDiv" ).text( "##### Create Filter File #####\n\n" );
+				$( "#filterFileOutputDiv" ).append( "SSH into the management server IP: " + mdmServerIP + "\nFrom expert mode on the management server run the following commands:\n\n" );
 				$( "#filterFileOutputDiv" ).append( "echo -e \'" );
 				$.each(filterListLines, function(){
 					//This will account for any blank lines and ignore them
